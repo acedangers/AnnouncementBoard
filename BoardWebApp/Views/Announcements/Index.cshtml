@@ -2,71 +2,56 @@
 
 <h2>Оголошення</h2>
 
-<form asp-action="Index" method="get" class="mb-3" id="filterForm">
-    <select name="category" class="form-select" id="categorySelect">
-        <option value="">-- Всі категорії --</option>
-        @foreach (var cat in ViewBag.Categories as List<string>)
+<div class="container mt-4">
+    <h2 class="mb-4">Список оголошень</h2>
+
+    <form method="get" class="row mb-4">
+        <div class="col-md-4">
+            <select name="category" class="form-select" onchange="this.form.submit()">
+                <option value="">-- Всі категорії --</option>
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    var selected = cat == ViewBag.SelectedCategory ? "selected" : "";
+                    @:<option value="@cat" @selected>@cat</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select name="subcategory" class="form-select" onchange="this.form.submit()">
+                <option value="">-- Всі підкатегорії --</option>
+                @foreach (var sub in ViewBag.SubCategories)
+                {
+                    var selected = sub == ViewBag.SelectedSubCategory ? "selected" : "";
+                    @:<option value="@sub" @selected>@sub</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <a href="/Announcements" class="btn btn-sm btn-primary">Скинути фільтри</a>
+        </div>
+    </form>
+
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var announcement in Model)
         {
-            <option value="@cat" selected="@(cat == ViewBag.SelectedCategory)">
-                @cat
-            </option>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@announcement.Title</h5>
+                        <p class="card-text">@announcement.Description</p>
+                        <p class="text-muted">
+                            @announcement.Category / @announcement.SubCategory <br />
+                            Дата: @announcement.CreatedDate.ToString("dd.MM.yyyy") <br />
+                            Статус: <strong>@announcement.Status</strong>
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="/Announcements/Edit/@announcement.Id" class="btn btn-sm btn-primary">Редагувати</a>
+                        <a href="/Announcements/Delete/@announcement.Id" class="btn btn-sm btn-danger">Видалити</a>
+                    </div>
+                </div>
+            </div>
         }
-    </select>
-
-    <select name="subcategory" class="form-select mt-2" id="subcategorySelect">
-        <option value="">-- Всі підкатегорії --</option>
-        @foreach (var sub in ViewBag.Subcategories as List<string>)
-        {
-            <option value="@sub" selected="@(sub == ViewBag.SelectedSubcategory)">
-                @sub
-            </option>
-        }
-    </select>
-</form>
-
-@section Scripts {
-    <script>
-        document.getElementById('categorySelect').addEventListener('change', function () {
-            // Reset subcategory select
-            document.getElementById('subcategorySelect').selectedIndex = 0;
-            // Submit the form
-            document.getElementById('filterForm').submit();
-        });
-
-        document.getElementById('subcategorySelect').addEventListener('change', function () {
-            document.getElementById('filterForm').submit();
-        });
-    </script>
-}
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Назва</th>
-            <th>Опис</th>
-            <th>Категорія</th>
-            <th>Підкатегорія</th>
-            <th>Статус</th>
-            <th>Дата створення</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var a in Model)
-        {
-            <tr>
-                <td>@a.Title</td>
-                <td>@a.Description</td>
-                <td>@a.Category</td>
-                <td>@a.SubCategory</td>
-                <td>@(a.Status ? "Активне" : "Неактивне")</td>
-                <td>@a.CreatedDate.ToShortDateString()</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@a.Id">Редагувати</a> |
-                    <a asp-action="Delete" asp-route-id="@a.Id">Видалити</a>
-                </td>
-
-            </tr>
-        }
-    </tbody>
-</table>
+    </div>
+</div>

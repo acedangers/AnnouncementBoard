@@ -34,8 +34,8 @@ public class AnnouncementsController : Controller
             filteredCategory = filteredCategory.Where(a => a.Category == category).ToList();
 
         // Data for subcategory filter — from the filtered list by category.
-        ViewBag.Subcategories = filteredCategory.Select(a => a.SubCategory).Distinct().ToList();
-        ViewBag.SelectedSubcategory = subcategory;
+        ViewBag.SubCategories = filteredCategory.Select(a => a.SubCategory).Distinct().ToList();
+        ViewBag.SelectedSubCategory = subcategory;
 
         // SubCategory filtered list.
         var filteredSubCategory = filteredCategory;
