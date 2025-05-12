@@ -23,6 +23,11 @@
                 <td>@a.SubCategory</td>
                 <td>@(a.Status ? "Активне" : "Неактивне")</td>
                 <td>@a.CreatedDate.ToShortDateString()</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@a.Id">Редагувати</a> |
+                    <a asp-action="Delete" asp-route-id="@a.Id">Видалити</a>
+                </td>
+
             </tr>
         }
     </tbody>

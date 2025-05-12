@@ -1,0 +1,10 @@
+﻿@model BoardWebApp.Models.Announcement
+
+<h2>Видалити оголошення</h2>
+<p>Ви дійсно хочете видалити "<strong>@Model.Title</strong>"?</p>
+
+<form asp-action="Delete">
+    <input asp-for="Id" type="hidden" />
+    <button type="submit" class="btn btn-danger">Так, видалити</button>
+    <a asp-action="Index" class="btn btn-secondary">Скасувати</a>
+</form>
