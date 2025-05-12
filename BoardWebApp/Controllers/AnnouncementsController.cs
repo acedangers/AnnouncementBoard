@@ -12,21 +12,40 @@ public class AnnouncementsController : Controller
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? category, string? subcategory)
     {
         var client = _httpClientFactory.CreateClient("BoardApi");
         var response = await client.GetAsync("announcements");
 
         if (!response.IsSuccessStatusCode)
-        {
-            return View("Error");
-        }
+            return View(new List<Announcement>());
 
         var content = await response.Content.ReadAsStringAsync();
-        var data = JsonSerializer.Deserialize<List<Announcement>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var allAnnouncements = JsonSerializer.Deserialize<List<Announcement>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-        return View(data);
+        // Data for category filter — from the full list of announcements.
+        ViewBag.Categories = allAnnouncements.Select(a => a.Category).Distinct().ToList();
+        ViewBag.SelectedCategory = category;
+
+        // Category filtered list.
+        var filteredCategory = allAnnouncements;
+
+        if (!string.IsNullOrEmpty(category))
+            filteredCategory = filteredCategory.Where(a => a.Category == category).ToList();
+
+        // Data for subcategory filter — from the filtered list by category.
+        ViewBag.Subcategories = filteredCategory.Select(a => a.SubCategory).Distinct().ToList();
+        ViewBag.SelectedSubcategory = subcategory;
+
+        // SubCategory filtered list.
+        var filteredSubCategory = filteredCategory;
+
+        if (!string.IsNullOrEmpty(subcategory))
+            filteredSubCategory = filteredSubCategory.Where(a => a.SubCategory == subcategory).ToList();
+
+        return View(filteredSubCategory);
     }
+
 
     // GET: Announcements/Create
     public IActionResult Create()

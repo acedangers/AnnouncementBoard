@@ -2,6 +2,44 @@
 
 <h2>Оголошення</h2>
 
+<form asp-action="Index" method="get" class="mb-3" id="filterForm">
+    <select name="category" class="form-select" id="categorySelect">
+        <option value="">-- Всі категорії --</option>
+        @foreach (var cat in ViewBag.Categories as List<string>)
+        {
+            <option value="@cat" selected="@(cat == ViewBag.SelectedCategory)">
+                @cat
+            </option>
+        }
+    </select>
+
+    <select name="subcategory" class="form-select mt-2" id="subcategorySelect">
+        <option value="">-- Всі підкатегорії --</option>
+        @foreach (var sub in ViewBag.Subcategories as List<string>)
+        {
+            <option value="@sub" selected="@(sub == ViewBag.SelectedSubcategory)">
+                @sub
+            </option>
+        }
+    </select>
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById('categorySelect').addEventListener('change', function () {
+            // Reset subcategory select
+            document.getElementById('subcategorySelect').selectedIndex = 0;
+            // Submit the form
+            document.getElementById('filterForm').submit();
+        });
+
+        document.getElementById('subcategorySelect').addEventListener('change', function () {
+            document.getElementById('filterForm').submit();
+        });
+    </script>
+}
+
+
 <table class="table">
     <thead>
         <tr>
