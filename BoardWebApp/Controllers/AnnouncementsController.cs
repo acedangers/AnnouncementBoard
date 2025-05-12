@@ -1,4 +1,5 @@
 ﻿using BoardWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -48,12 +49,14 @@ public class AnnouncementsController : Controller
 
 
     // GET: Announcements/Create
+    [Authorize]
     public IActionResult Create()
     {
         return View();
     }
 
     // POST: Announcements/Create
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create(Announcement announcement)
     {
@@ -75,6 +78,7 @@ public class AnnouncementsController : Controller
     }
 
     // GET: Announcements/Edit/{id}
+    [Authorize]
     public async Task<IActionResult> Edit(int id)
     {
         var client = _httpClientFactory.CreateClient("BoardApi");
@@ -90,6 +94,7 @@ public class AnnouncementsController : Controller
     }
 
     // POST: Announcements/Edit/{id}
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Edit(int id, Announcement announcement)
     {
@@ -111,6 +116,7 @@ public class AnnouncementsController : Controller
     }
 
     // GET: Announcements/Delete/{id}
+    [Authorize]
     public async Task<IActionResult> Delete(int id)
     {
         var client = _httpClientFactory.CreateClient("BoardApi");
@@ -126,6 +132,7 @@ public class AnnouncementsController : Controller
     }
 
     // POST: Announcements/Delete/{id}
+    [Authorize]
     [HttpPost, ActionName("Delete")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
