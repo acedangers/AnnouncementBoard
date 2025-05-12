@@ -1,0 +1,29 @@
+﻿@model List<BoardWebApp.Models.Announcement>
+
+<h2>Оголошення</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Назва</th>
+            <th>Опис</th>
+            <th>Категорія</th>
+            <th>Підкатегорія</th>
+            <th>Статус</th>
+            <th>Дата створення</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.Title</td>
+                <td>@a.Description</td>
+                <td>@a.Category</td>
+                <td>@a.SubCategory</td>
+                <td>@(a.Status ? "Активне" : "Неактивне")</td>
+                <td>@a.CreatedDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
