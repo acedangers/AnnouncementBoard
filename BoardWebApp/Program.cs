@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 // Add HttpClient for BoardApi.
 builder.Services.AddHttpClient("BoardApi", client =>
 {
-    client.BaseAddress = new Uri("https://board-api-cbb8fhbbcmeabsfa.westeurope-01.azurewebsites.net");
+    client.BaseAddress = new Uri("https://board-api-cbb8fhbbcmeabsfa.westeurope-01.azurewebsites.net/api/");
 });
 
 // Configure Google Aunthentication.
@@ -28,12 +28,11 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+app.UseExceptionHandler("/Home/Error");
+// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+app.UseHsts();
+
+app.UseDeveloperExceptionPage(); // עטלקאסמגמ!
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
