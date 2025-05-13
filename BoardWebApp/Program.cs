@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 // Add HttpClient for BoardApi.
 builder.Services.AddHttpClient("BoardApi", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:5001/api/");
+    client.BaseAddress = new Uri("https://board-api-cbb8fhbbcmeabsfa.westeurope-01.azurewebsites.net");
 });
 
 // Configure Google Aunthentication.
