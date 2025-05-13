@@ -6,18 +6,22 @@
     <div>
         <label>Заголовок</label>
         <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
     </div>
     <div>
         <label>Опис</label>
         <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div>
         <label>Категорія</label>
         <input asp-for="Category" class="form-control" />
+        <span asp-validation-for="Category" class="text-danger"></span>
     </div>
     <div>
         <label>Підкатегорія</label>
         <input asp-for="SubCategory" class="form-control" />
+        <span asp-validation-for="SubCategory" class="text-danger"></span>
     </div>
     <div>
         <label>Активне</label>
